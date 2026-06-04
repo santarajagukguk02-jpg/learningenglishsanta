@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Hub - BC Style</title>
+    <style>
+        /* --- CSS STYLING (British Council Style: Clean, Blue, Professional) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-blue: #002366; /* Deep British Blue */
+            --secondary-blue: #0070cc;
+            --accent-orange: #ff6600;
+            --success-green: #008a00;
+            --error-red: #d50000;
+            --bg-light: #6ddeec;blue;
+            --text-dark: #241313;
+            --white: #f587b1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-image: url(bg.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 800px;
+            min-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .content-area {
+            padding: 40px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 { color: var(--primary-blue); margin-bottom: 20px; font-size: 22px; }
+        p.instruction { color: #ffffff; margin-bottom: 25px; font-size: 16px; text-align: center; }
+
+        /* Form Styles */
+        .form-group { width: 100%; max-width: 400px; margin-bottom: 20px; text-align: left; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--primary-blue); }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 12px 15px;
+            border: 2px solid #fcf9f9; border-radius: 6px;
+            font-size: 16px; transition: border-color 0.3s;
+        }
+        input:focus { border-color: var(--secondary-blue); outline: none; }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--secondary-blue);
+            color: var(--white);
+            border: none; padding: 14px 24px;
+            font-size: 16px; font-weight: 600;
+            border-radius: 6px; cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; max-width: 400px;
+        }
+        .btn:hover { background-color: #005bb5; }
+        .btn-menu { background-color: var(--white); color: var(--primary-blue); border: 2px solid var(--primary-blue); margin-bottom: 15px; }
+        .btn-menu:hover { background-color: var(--primary-blue); color: var(--white); }
+        .btn-outline { background-color: transparent; border: 2px solid #ccc; color: #555; margin-top: 20px; }
+        .btn-outline:hover { background-color: #f4f4f4; }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .feedback { font-weight: 700; font-size: 18px; margin: 20px 0; min-height: 22px; text-align: center; }
+        .text-success { color: var(--success-green); }
+        .text-error { color: var(--error-red); }
+
+        /* Game 1: Match Layout */
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .match-card {
+            padding: 15px; border: 2px solid #ccc; border-radius: 8px;
+            cursor: pointer; text-align: center; font-weight: 600;
+            background-color: var(--white); transition: 0.2s;
+        }
+        .match-card.selected { border-color: var(--accent-orange); background-color: #fff3e6; }
+        .match-card.solved { border-color: var(--success-green); background-color: #e6ffe6; color: var(--success-green); pointer-events: none; opacity: 0.7; }
+
+        /* Game 2: Grammar Layout */
+        .grammar-question { font-size: 20px; font-weight: 600; margin-bottom: 30px; text-align: center; }
+        .grammar-options { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 500px; }
+        .option-btn { padding: 15px; border: 2px solid var(--secondary-blue); background: var(--white); color: var(--secondary-blue); font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; }
+        .option-btn:hover { background: var(--secondary-blue); color: var(--white); }
+
+        /* Game 3: Spelling Layout */
+        .spell-clue { font-size: 18px; font-style: italic; color: #ffffff; margin-bottom: 20px; text-align: center; }
+        .letter-tiles { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .tile {
+            width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+            background-color: var(--secondary-blue); color: var(--white);
+            font-size: 20px; font-weight: 700; border-radius: 6px; cursor: pointer;
+            box-shadow: 0 4px 0 #005bb5;
+        }
+        .tile:active { transform: translateY(4px); box-shadow: none; }
+        .answer-box {
+            min-height: 50px; border: 2px dashed #ccc; border-radius: 8px;
+            display: flex; gap: 10px; justify-content: center; padding: 10px;
+            margin-bottom: 20px; width: 100%; max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <h1 id="header-title">English Learning Hub</h1>
+        </header>
+
+        <div class="content-area">
+            
+            <div id="login-section" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2>Welcome Student</h2>
+                <p class="instruction">Please log in to access your learning modules.</p>
+                
+                <div class="form-group">
+                    <label for="student-name">Full Name</label>
+                    <input type="text" id="student-name" placeholder="Enter your name" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="student-pass">Password</label>
+                    <input type="password" id="student-pass" placeholder="Enter your password">
+                </div>
+                
+                <button class="btn" onclick="handleLogin()">Log In</button>
+                <div id="login-error" class="feedback text-error" style="font-size: 14px;"></div>
+            </div>
+
+            <div id="dashboard-section" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2 id="welcome-message">Dashboard</h2>
+                <p class="instruction">Select a learning module to begin your practice.</p>
+                
+                <button class="btn btn-menu" onclick="openGame('vocab')">1. Vocabulary Matcher</button>
+                <button class="btn btn-menu" onclick="openGame('grammar')">2. Grammar Quiz</button>
+                <button class="btn btn-menu" onclick="openGame('spelling')">3. Spelling Bee</button>
+                
+                <button class="btn btn-outline" onclick="logout()">Log Out</button>
+            </div>
+
+            <div>
+                <p>
+                    &copy; 2026 Santa Monica-TRPL2B.
+                </p>
+            </div>
+            <div id="vocab-section" class="hidden" style="width: 100%;">
+                <h2>Vocabulary Matcher</h2>
+                <p class="instruction">Click a word, then click its correct definition.</p>
+                
+                <div class="match-grid" id="vocab-grid"></div>
+                <div id="vocab-feedback" class="feedback"></div>
+                
+                <button class="btn btn-outline" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+
+            <div id="grammar-section" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2>Grammar Practice</h2>
+                <p class="instruction">Choose the correct word to complete the sentence.</p>
+                
+                <div class="grammar-question" id="grammar-q">Question goes here</div>
+                <div class="grammar-options" id="grammar-opts"></div>
+                
+                <div id="grammar-feedback" class="feedback"></div>
+                <button class="btn hidden" id="grammar-next" onclick="nextGrammar()">Next Question</button>
+                <button class="btn btn-outline" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+
+            <div id="spelling-section" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2>Spelling Bee</h2>
+                <p class="instruction">Unscramble the letters to find the word.</p>
+                
+                <div class="spell-clue" id="spell-clue">Clue goes here</div>
+                
+                <div class="answer-box" id="spell-answer"></div>
+                <div class="letter-tiles" id="spell-pool"></div>
+                
+                <div id="spell-feedback" class="feedback"></div>
+                <button class="btn btn-secondary hidden" id="spell-next" onclick="nextSpelling()" style="background-color: var(--accent-orange); color: white; margin-bottom:10px;">Next Word</button>
+                <button class="btn btn-outline" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- GLOBAL STATE ---
+        let currentUser = "";
+
+        // --- NAVIGATION & AUTH ---
+        function handleLogin() {
+            const name = document.getElementById('student-name').value.trim();
+            const pass = document.getElementById('student-pass').value.trim();
+            const err = document.getElementById('login-error');
+
+            if (name === "" || pass === "") {
+                err.innerText = "Please enter both name and password.";
+                return;
+            }
+            if (pass.length < 4) {
+                err.innerText = "Password must be at least 4 characters long.";
+                return;
+            }
+
+            currentUser = name;
+            err.innerText = "";
+            document.getElementById('welcome-message').innerText = `Welcome, ${currentUser}`;
+            
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+        }
+
+        function logout() {
+            document.getElementById('student-name').value = "";
+            document.getElementById('student-pass').value = "";
+            currentUser = "";
+            showSection('login-section');
+        }
+
+        function showDashboard() {
+            showSection('dashboard-section');
+        }
+
+        function showSection(sectionId) {
+            const sections = ['login-section', 'dashboard-section', 'vocab-section', 'grammar-section', 'spelling-section'];
+            sections.forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function openGame(gameType) {
+            if (gameType === 'vocab') initVocabGame();
+            if (gameType === 'grammar') initGrammarGame();
+            if (gameType === 'spelling') initSpellingGame();
+        }
+
+        // --- GAME 1: VOCABULARY MATCHER ---
+        const vocabData = [
+            { word: "Enormous", def: "Very large in size or quantity." },
+            { word: "Fascinating", def: "Extremely interesting." },
+            { word: "Delicious", def: "Having a very pleasant taste or smell." },
+            { word: "Exhausted", def: "Very tired." },
+            { word: "Excited", def: "Very happy." }
+
+            
+        ];
+        
+        let vocabSelected = null;
+        let vocabSolvedCount = 0;
+
+        function initVocabGame() {
+            showSection('vocab-section');
+            vocabSolvedCount = 0;
+            vocabSelected = null;
+            document.getElementById('vocab-feedback').innerText = "";
+            
+            const grid = document.getElementById('vocab-grid');
+            grid.innerHTML = "";
+
+            // Create arrays for words and definitions, then shuffle them
+            let items = [];
+            vocabData.forEach(item => {
+                items.push({ text: item.word, type: 'word', match: item.word });
+                items.push({ text: item.def, type: 'def', match: item.word });
+            });
+            items.sort(() => Math.random() - 0.5); // Shuffle
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-card';
+                div.innerText = item.text;
+                div.dataset.type = item.type;
+                div.dataset.match = item.match;
+                div.onclick = () => handleVocabClick(div);
+                grid.appendChild(div);
+            });
+        }
+
+        function handleVocabClick(element) {
+            if (element.classList.contains('solved')) return;
+
+            if (!vocabSelected) {
+                // First click
+                vocabSelected = element;
+                element.classList.add('selected');
+            } else {
+                // Second click
+                if (vocabSelected === element) {
+                    // Deselect if clicked same item
+                    element.classList.remove('selected');
+                    vocabSelected = null;
+                    return;
+                }
+
+                const type1 = vocabSelected.dataset.type;
+                const type2 = element.dataset.type;
+
+                if (type1 === type2) {
+                    // Clicked two words or two defs. Change selection.
+                    vocabSelected.classList.remove('selected');
+                    vocabSelected = element;
+                    element.classList.add('selected');
+                    return;
+                }
+
+                // Check for match
+                if (vocabSelected.dataset.match === element.dataset.match) {
+                    // Correct Match
+                    vocabSelected.classList.remove('selected');
+                    vocabSelected.classList.add('solved');
+                    element.classList.add('solved');
+                    vocabSolvedCount++;
+                    document.getElementById('vocab-feedback').innerHTML = `<span class="text-success">Excellent match!</span>`;
+                    
+                    if (vocabSolvedCount === vocabData.length) {
+                        document.getElementById('vocab-feedback').innerHTML = `<span class="text-success">Brilliant! You matched them all! 🎉</span>`;
+                    }
+                } else {
+                    // Wrong Match
+                    vocabSelected.classList.remove('selected');
+                    document.getElementById('vocab-feedback').innerHTML = `<span class="text-error">Incorrect. Try again!</span>`;
+                }
+                vocabSelected = null;
+            }
+        }
+
+        // --- GAME 2: GRAMMAR QUIZ ---
+        const grammarData = [
+            { q: "Yesterday, I ___ to the museum with my friends.", opts: ["go", "went", "going"], ans: "went" },
+            { q: "She ___ reading a book when the phone rang.", opts: ["is", "were", "was"], ans: "was" },
+            { q: "If it rains tomorrow, we ___ at home.", opts: ["will stay", "stayed", "staying"], ans: "will stay" },
+            { q: "The list of items __ on the table.", opts: ["are", "is", "have", "were"],  ans: "is"},
+            { q: "The dogs in the backyard ____ loudly every night.", opts: ["bark", "barks", "barking", "is barking"], ans: "bark"}
+        ];
+        let grammarIndex = 0;
+
+        function initGrammarGame() {
+            showSection('grammar-section');
+            grammarIndex = 0;
+            loadGrammarQuestion();
+        }
+
+        function loadGrammarQuestion() {
+            if (grammarIndex >= grammarData.length) {
+                document.getElementById('grammar-q').innerText = "Module Complete! Well done.";
+                document.getElementById('grammar-opts').innerHTML = "";
+                document.getElementById('grammar-feedback').innerText = "";
+                document.getElementById('grammar-next').classList.add('hidden');
+                return;
+            }
+
+            const data = grammarData[grammarIndex];
+            document.getElementById('grammar-q').innerText = data.q;
+            document.getElementById('grammar-feedback').innerText = "";
+            document.getElementById('grammar-next').classList.add('hidden');
+            
+            const optsContainer = document.getElementById('grammar-opts');
+            optsContainer.innerHTML = "";
+
+            data.opts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkGrammar(opt, data.ans, btn);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function checkGrammar(selected, correct, btn) {
+            // Disable all buttons after choice
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            const feedback = document.getElementById('grammar-feedback');
+            if (selected === correct) {
+                btn.style.backgroundColor = 'var(--success-green)';
+                btn.style.color = 'white';
+                btn.style.borderColor = 'var(--success-green)';
+                feedback.innerHTML = `<span class="text-success">Correct! Great job.</span>`;
+            } else {
+                btn.style.backgroundColor = 'var(--error-red)';
+                btn.style.color = 'white';
+                btn.style.borderColor = 'var(--error-red)';
+                feedback.innerHTML = `<span class="text-error">Incorrect. The correct answer was '${correct}'.</span>`;
+            }
+            document.getElementById('grammar-next').classList.remove('hidden');
+        }
+
+        function nextGrammar() {
+            grammarIndex++;
+            loadGrammarQuestion();
+        }
+
+        // --- GAME 3: SPELLING BEE ---
+        const spellingData = [
+            { word: "ELEPHANT", clue: "A very large gray animal with a long trunk." },
+            { word: "LIBRARY", clue: "A place where you can borrow books." },
+            { word: "UMBRELLA", clue: "Used to protect yourself from the rain." },
+            { word: "SCHOOL", clue: "A place ti study." },
+            { word: "PEN", clue: "Items for writing in books." }
+        ];
+        let spellingIndex = 0;
+        let currentWordChars = [];
+
+        function initSpellingGame() {
+            showSection('spelling-section');
+            spellingIndex = 0;
+            loadSpellingWord();
+        }
+
+        function loadSpellingWord() {
+            if (spellingIndex >= spellingData.length) {
+                document.getElementById('spell-clue').innerText = "Module Complete! Fantastic spelling.";
+                document.getElementById('spell-answer').innerHTML = "";
+                document.getElementById('spell-pool').innerHTML = "";
+                document.getElementById('spell-feedback').innerText = "";
+                document.getElementById('spell-next').classList.add('hidden');
+                return;
+            }
+
+            const data = spellingData[spellingIndex];
+            document.getElementById('spell-clue').innerText = `Clue: ${data.clue}`;
+            document.getElementById('spell-feedback').innerText = "";
+            document.getElementById('spell-next').classList.add('hidden');
+            
+            const answerBox = document.getElementById('spell-answer');
+            const poolBox = document.getElementById('spell-pool');
+            answerBox.innerHTML = "";
+            poolBox.innerHTML = "";
+
+            currentWordChars = data.word.split('');
+            let shuffledChars = [...currentWordChars].sort(() => Math.random() - 0.5);
+
+            shuffledChars.forEach((char, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.innerText = char;
+                tile.id = `tile-${index}`;
+                tile.onclick = () => moveTile(tile);
+                poolBox.appendChild(tile);
+            });
+        }
+
+        function moveTile(tile) {
+            const answerBox = document.getElementById('spell-answer');
+            const poolBox = document.getElementById('spell-pool');
+            
+            if (tile.parentElement.id === 'spell-pool') {
+                answerBox.appendChild(tile);
+            } else {
+                poolBox.appendChild(tile);
+            }
+
+            checkSpelling();
+        }
+
+        function checkSpelling() {
+            const answerBox = document.getElementById('spell-answer');
+            const poolBox = document.getElementById('spell-pool');
+            
+            // Only check if all tiles are in the answer box
+            if (poolBox.children.length === 0) {
+                let userSpelling = "";
+                for (let i = 0; i < answerBox.children.length; i++) {
+                    userSpelling += answerBox.children[i].innerText;
+                }
+
+                const correctWord = spellingData[spellingIndex].word;
+                if (userSpelling === correctWord) {
+                    document.getElementById('spell-feedback').innerHTML = `<span class="text-success">Perfect spelling!</span>`;
+                    document.getElementById('spell-next').classList.remove('hidden');
+                    // Disable clicking after correct
+                    for (let i = 0; i < answerBox.children.length; i++) {
+                        answerBox.children[i].style.pointerEvents = 'none';
+                        answerBox.children[i].style.backgroundColor = 'var(--success-green)';
+                        answerBox.children[i].style.boxShadow = 'none';
+                    }
+                } else {
+                    document.getElementById('spell-feedback').innerHTML = `<span class="text-error">Not quite right. Click letters to move them back and try again.</span>`;
+                }
+            } else {
+                // Clear feedback if they move a tile back
+                document.getElementById('spell-feedback').innerText = "";
+            }
+
+        }
+
+        function nextSpelling() {
+            spellingIndex++;
+            loadSpellingWord();
+        }
+    </script>
+</body>
+</html>
