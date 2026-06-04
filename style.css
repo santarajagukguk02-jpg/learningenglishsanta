@@ -1,0 +1,130 @@
+
+        :root {
+            --primary-blue: #002366; /* Deep British Blue */
+            --secondary-blue: #0070cc;
+            --accent-orange: #ff6600;
+            --success-green: #008a00;
+            --error-red: #d50000;
+            --bg-light: #6ddeec;
+            --text-dark: #241313;
+            --white: #f587b1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-image: url(bg.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 800px;
+            min-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .content-area {
+            padding: 40px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2 { color: var(--primary-blue); margin-bottom: 20px; font-size: 22px; }
+        p.instruction { color: #ffffff; margin-bottom: 25px; font-size: 16px; text-align: center; }
+
+        /* Form Styles */
+        .form-group { width: 100%; max-width: 400px; margin-bottom: 20px; text-align: left; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--primary-blue); }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 12px 15px;
+            border: 2px solid #fcf9f9; border-radius: 6px;
+            font-size: 16px; transition: border-color 0.3s;
+        }
+        input:focus { border-color: var(--secondary-blue); outline: none; }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--secondary-blue);
+            color: var(--white);
+            border: none; padding: 14px 24px;
+            font-size: 16px; font-weight: 600;
+            border-radius: 6px; cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; max-width: 400px;
+        }
+        .btn:hover { background-color: #005bb5; }
+        .btn-menu { background-color: var(--white); color: var(--primary-blue); border: 2px solid var(--primary-blue); margin-bottom: 15px; }
+        .btn-menu:hover { background-color: var(--primary-blue); color: var(--white); }
+        .btn-outline { background-color: transparent; border: 2px solid #ccc; color: #555; margin-top: 20px; }
+        .btn-outline:hover { background-color: #f4f4f4; }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .feedback { font-weight: 700; font-size: 18px; margin: 20px 0; min-height: 22px; text-align: center; }
+        .text-success { color: var(--success-green); }
+        .text-error { color: var(--error-red); }
+
+        /* Game 1: Match Layout */
+        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .match-card {
+            padding: 15px; border: 2px solid #ccc; border-radius: 8px;
+            cursor: pointer; text-align: center; font-weight: 600;
+            background-color: var(--white); transition: 0.2s;
+        }
+        .match-card.selected { border-color: var(--accent-orange); background-color: #fff3e6; }
+        .match-card.solved { border-color: var(--success-green); background-color: #e6ffe6; color: var(--success-green); pointer-events: none; opacity: 0.7; }
+
+        /* Game 2: Grammar Layout */
+        .grammar-question { font-size: 20px; font-weight: 600; margin-bottom: 30px; text-align: center; }
+        .grammar-options { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 500px; }
+        .option-btn { padding: 15px; border: 2px solid var(--secondary-blue); background: var(--white); color: var(--secondary-blue); font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; }
+        .option-btn:hover { background: var(--secondary-blue); color: var(--white); }
+
+        /* Game 3: Spelling Layout */
+        .spell-clue { font-size: 18px; font-style: italic; color: #ffffff; margin-bottom: 20px; text-align: center; }
+        .letter-tiles { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .tile {
+            width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+            background-color: var(--secondary-blue); color: var(--white);
+            font-size: 20px; font-weight: 700; border-radius: 6px; cursor: pointer;
+            box-shadow: 0 4px 0 #005bb5;
+        }
+        .tile:active { transform: translateY(4px); box-shadow: none; }
+        .answer-box {
+            min-height: 50px; border: 2px dashed #ccc; border-radius: 8px;
+            display: flex; gap: 10px; justify-content: center; padding: 10px;
+            margin-bottom: 20px; width: 100%; max-width: 500px;
+        }

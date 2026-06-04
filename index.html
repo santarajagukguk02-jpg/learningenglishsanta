@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+</head>
+<body>
+    
+    <div class="app-container">
+        <header>
+            <h1 id="header-title">English Learning Hub</h1>
+        </header>
+
+        <div class="content-area">
+            
+            <div id="login-section" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2>Welcome Student</h2>
+                <p class="instruction">Please log in to access your learning modules.</p>
+                
+                <div class="form-group">
+                    <label for="student-name">Full Name</label>
+                    <input type="text" id="student-name" placeholder="Enter your name" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="student-pass">Password</label>
+                    <input type="password" id="student-pass" placeholder="Enter your password">
+                </div>
+                
+                <button class="btn" onclick="handleLogin()">Log In</button>
+                <div id="login-error" class="feedback text-error" style="font-size: 14px;"></div>
+            </div>
+
+            <div id="dashboard-section" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2 id="welcome-message">Dashboard</h2>
+                <p class="instruction">Select a learning module to begin your practice.</p>
+                
+                <button class="btn btn-menu" onclick="openGame('vocab')">1. Vocabulary Matcher</button>
+                <button class="btn btn-menu" onclick="openGame('grammar')">2. Grammar Quiz</button>
+                <button class="btn btn-menu" onclick="openGame('spelling')">3. Spelling Bee</button>
+                
+                <button class="btn btn-outline" onclick="logout()">Log Out</button>
+            </div>
+
+            <div>
+                <p>
+                    &copy; 2026 Santa Monica-TRPL2B.
+                </p>
+            </div>
+            <div id="vocab-section" class="hidden" style="width: 100%;">
+                <h2>Vocabulary Matcher</h2>
+                <p class="instruction">Click a word, then click its correct definition.</p>
+                
+                <div class="match-grid" id="vocab-grid"></div>
+                <div id="vocab-feedback" class="feedback"></div>
+                
+                <button class="btn btn-outline" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+
+            <div id="grammar-section" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2>Grammar Practice</h2>
+                <p class="instruction">Choose the correct word to complete the sentence.</p>
+                
+                <div class="grammar-question" id="grammar-q">Question goes here</div>
+                <div class="grammar-options" id="grammar-opts"></div>
+                
+                <div id="grammar-feedback" class="feedback"></div>
+                <button class="btn hidden" id="grammar-next" onclick="nextGrammar()">Next Question</button>
+                <button class="btn btn-outline" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+
+            <div id="spelling-section" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h2>Spelling Bee</h2>
+                <p class="instruction">Unscramble the letters to find the word.</p>
+                
+                <div class="spell-clue" id="spell-clue">Clue goes here</div>
+                
+                <div class="answer-box" id="spell-answer"></div>
+                <div class="letter-tiles" id="spell-pool"></div>
+                
+                <div id="spell-feedback" class="feedback"></div>
+                <button class="btn btn-secondary hidden" id="spell-next" onclick="nextSpelling()" style="background-color: var(--accent-orange); color: white; margin-bottom:10px;">Next Word</button>
+                <button class="btn btn-outline" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
